@@ -1,0 +1,105 @@
+paths:
+  /api/adoptions:
+    get:
+      summary: Listar adopciones
+      tags:
+        - Adoptions
+      responses:
+        "200":
+          description: Lista de adopciones
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Adoption"
+
+  /api/adoptions/{aid}:    
+    get:
+      summary: Listar una adopción en particular por ID
+      tags:
+        - Adoptions
+      parameters:
+        - in: path
+          name: aid
+          required: true
+          schema:
+            type: string
+          description: ID de la adopción
+      responses:
+        "200":
+          description: Lista una adopción en particular por ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Adoption"
+    
+  /api/adoptions/{uid}/{pid}:     
+    post:
+      summary: Crear una nueva adopción
+      tags:
+        - Adoptions
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: ID del usuario adoptante
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota
+      responses:
+        "200":
+          description: Crear una nueva adopción
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/Adoption"
+components:
+  schemas:
+    Adoption:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64e2d3f8a5d6f20017b8d9d5
+        owner:
+          type: string
+          example: 64e2d3f8a5d6f20017b8d9d5
+        pet:
+          type: string
+          example: 64e2d3f8a5d6f20017b8d9d5
+
+    AdoptionInput:
+      type: object
+      properties:
+        owner:
+          type: string 
+          example: 64e2d3f8a5d6f20017b8d9d5
+        pet:
+          type: string 
+          example: 64e2d3f8a5d6f20017b8d9d5

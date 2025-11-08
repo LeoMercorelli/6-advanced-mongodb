@@ -1,0 +1,156 @@
+paths:
+  /api/pets:
+    get:
+      summary: Obtener todas las mascotas
+      tags:
+        - Pets
+      responses:
+        "200":
+          description: Lista de mascotas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Pet"
+    post:
+      summary: Crear una nueva mascota
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PetInput"
+      responses:
+        "200":
+          description: Mascota creada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items: 
+                      $ref: "#/components/schemas/Pet"
+
+  /api/pets/withimage:
+    post:
+      summary: Crear mascota con imagen
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Firulais
+                specie:
+                  type: string
+                  example: perro
+                birthDate:
+                  type: string
+                  example: 2020-01-15
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Mascota creada con imagen correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/Pet"
+
+  /api/pets/{pid}:
+    put:
+      summary: Actualizar una mascota
+      tags:
+        - Pets
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PetInput"
+      responses:
+        "200":
+          description: Mascota actualizada correctamente
+    delete:
+      summary: Eliminar una mascota
+      tags:
+        - Pets
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota a eliminar
+      responses:
+        "200":
+          description: Mascota eliminada correctamente
+
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64e2d3f8a5d6f20017b8d9d5
+        name:
+          type: string
+          example: Max
+        specie:
+          type: string
+          example: perro
+        birthDate:
+          type: string
+          example: 2021-05-20
+        adopted:
+          type: boolean
+          example: false
+        image:
+          type: string
+          example: /public/img/max.jpg
+    PetInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Max
+        specie:
+          type: string
+          example: gato
+        birthDate:
+          type: string
+          example: 2019-10-10

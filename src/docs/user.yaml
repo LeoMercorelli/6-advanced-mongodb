@@ -1,0 +1,146 @@
+paths:
+  /api/users:
+    get:
+      summary: Obtener todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+  /api/users/{uid}:
+    get:
+      summary: Obtener usuario por ID
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      responses:
+        "200":
+          description: Se obtuvo un usuario por ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                      $ref: "#/components/schemas/User"
+    put:
+      summary: Actualizar un usuario
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "200":
+          description: Usuario actualizado correctamente
+    delete:
+      summary: Eliminar un usuario
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string  
+          description: ID del usurio a eliminar
+      responses:
+        "200":
+          description: Usuario eliminado correctamente
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64e2d3f8a5d6f20017b8d9d5
+        first_name:
+          type: string
+          example: Pedro
+        last_name:
+          type: string
+          example: Lopez
+        email:
+          type: string
+          example: pedrolopez@example.com
+        password:
+          type: string
+          example: coder123
+        role:
+          type: string
+          example: user
+        pets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pet"
+    UserInput:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: Pedro
+        last_name:
+          type: string
+          example: Lopez
+        email:
+          type: string
+          example: pedrolopez@example.com
+        password:
+          type: string
+          example: coder123
+    Pet:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64e2d3f8a5d6f20017b8d9d5
+        name:
+          type: string
+          example: Max
+        specie:
+          type: string
+          example: perro
+        birthDate:
+          type: string
+          example: 2021-05-20
+        adopted:
+          type: boolean
+          example: false
+        image:
+          type: string
+          example: /public/img/max.jpg
+
+

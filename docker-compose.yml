@@ -1,0 +1,7 @@
+services:
+  adoptme:
+    build: .
+    ports:
+      - "8181:8181"
+    env_file:
+      - .env
